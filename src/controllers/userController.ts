@@ -6,7 +6,7 @@ export async function signUp(req: Request, res: Response) {
 
     await userServices.signup({email, password});
 
-    res.sendStatus(200);
+    res.sendStatus(201);
 }
 
 export async function signIn(req: Request, res: Response) {
@@ -14,5 +14,5 @@ export async function signIn(req: Request, res: Response) {
 
     const token = await userServices.signin({email, password});
 
-    res.send({token}).status(201);
+    res.status(200).send({token});
 }
