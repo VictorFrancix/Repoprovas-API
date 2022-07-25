@@ -1,25 +1,24 @@
 import {Request, Response, NextFunction} from "express";
 import Jwt from 'jsonwebtoken';
+import { unauthorizedError } from "../utils/errorUtils.js";
 
 export const validateToken = (req: Request, res: Response, next: NextFunction) => {
     let token = req.headers.authorization;
     if (!token) {
-        throw {
-            type: "unauthorized",
-            message: "no token provide"
-        }
+        throw unauthorizedError("no token provide")
     }
 
+    try{
     token = token.replace("Bearer ", "");
     
     const decoded = Jwt.verify(token, process.env.JWT_SECRET);
     if (!decoded) {
-        throw {
-            type: "unauthorized",
-            message: "invalid token"
-        }
+        unauthorizedError("invalid token")
     }
     res.locals.user = decoded;
     
     next();
+} catch (error) {
+    throw unauthorizedError("invalid token")
+}
 }
