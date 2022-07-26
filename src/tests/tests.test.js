@@ -1,7 +1,7 @@
 import supertest from "supertest";
 
 import app from "../index.js";
-import prisma from "./../configs/db.js";
+import prisma from "../configs/db.js";
 import * as userFactory from "./factories/userFactory.js";
 import * as testFactory from "./factories/testFactory.js";
 
